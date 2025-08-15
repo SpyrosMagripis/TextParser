@@ -12,11 +12,9 @@ The script writes lines that contain **all** provided keywords to the output fil
 
 ## Web App
 
-A minimal Flask application is included for interactive use.
+```
+A small web server using only Python's standard library lets you upload a text file and view matching lines in the browser.
 
 ```
-pip install -r requirements.txt
 python app.py
 ```
-
-Open your browser to `http://localhost:5000`, upload a text file and provide space-separated keywords. Matching lines with their line numbers will be displayed on the page.

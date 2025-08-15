@@ -7,7 +7,7 @@ from typing import Iterable, List
 def filter_lines_from_lines(lines: Iterable[str], keywords: List[str]) -> List[str]:
     """Return lines containing all keywords prefixed with their line numbers."""
     return [
-        f"{i}: {line}"
+        f"{i}: {line.rstrip('\n')}"
         for i, line in enumerate(lines, start=1)
         if all(keyword in line for keyword in keywords)
     ]
@@ -19,7 +19,7 @@ def filter_lines(input_file: str, keywords: List[str], output_file: str) -> None
         output_file, "w", encoding="utf-8"
     ) as f_out:
         for result in filter_lines_from_lines(f_in, keywords):
-            f_out.write(result)
+            f_out.write(result + "\n")
 
 
 def parse_args() -> argparse.Namespace:
