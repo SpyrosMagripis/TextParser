@@ -1,12 +1,25 @@
+"""Utilities for filtering lines in text content."""
+
 import argparse
+from typing import Iterable, List
 
 
-def filter_lines(input_file: str, keywords: list[str], output_file: str) -> None:
-    """Filter lines containing all keywords and write them to output with line numbers."""
-    with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', encoding='utf-8') as f_out:
-        for i, line in enumerate(f_in, start=1):
-            if all(keyword in line for keyword in keywords):
-                f_out.write(f"{i}: {line}")
+def filter_lines_from_lines(lines: Iterable[str], keywords: List[str]) -> List[str]:
+    """Return lines containing all keywords prefixed with their line numbers."""
+    return [
+        f"{i}: {line.rstrip('\n')}"
+        for i, line in enumerate(lines, start=1)
+        if all(keyword in line for keyword in keywords)
+    ]
+
+
+def filter_lines(input_file: str, keywords: List[str], output_file: str) -> None:
+    """Filter lines in a file and write matching ones to output with line numbers."""
+    with open(input_file, "r", encoding="utf-8") as f_in, open(
+        output_file, "w", encoding="utf-8"
+    ) as f_out:
+        for result in filter_lines_from_lines(f_in, keywords):
+            f_out.write(result + "\n")
 
 
 def parse_args() -> argparse.Namespace:
